@@ -1,3 +1,5 @@
+#ifndef _Structure
+#define _Structure
 #include "../global/Header.hpp"
 struct MapNode{
     int x,y,type; // type:代表此节点为路或者房子
@@ -19,6 +21,12 @@ struct Position{
     int position_y;
     int type; // 位置类型 0->餐馆 1->目的地
     int bill_id; // 当前去往位置的订单id
+    bool operator <(Position a) const{
+        return true; // TODO:TSP比大小
+    }
+    bool operator >(Position a) const{
+        return false; // TODO:TSP比大小
+    }
 };
 
 typedef priority_queue<Position> RiderBag;
@@ -40,3 +48,4 @@ typedef vector<Bill*> BillLog; // 存放所有订单
 typedef queue<Bill*> BillQueue; //存放为分配订单队列
 typedef vector<Rider*> RiderList; // 骑手列表
 
+#endif
