@@ -1,1 +1,4 @@
-int RIDER_COUNT;
+#include "Header.hpp"
+#include "../baseStructure/Structure.hpp"
+
+RiderList GlobalRiderList;

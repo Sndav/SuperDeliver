@@ -28,6 +28,12 @@ struct Rider{
     int position_y;     
     Bill* current_bill; // 骑手当前订单
     RiderBag bag;     // 骑手背包数据
+    Rider(int id):
+        id(id),
+        position_x(-1),
+        position_y(-1),
+        current_bill(NULL)
+    {}; // 构造函数,初始化Rider,位置设为(-1,-1);其余设置为NULL;
 };
 
 typedef vector<Bill*> BillLog; // 存放所有订单
