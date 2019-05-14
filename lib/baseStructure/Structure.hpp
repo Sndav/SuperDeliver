@@ -10,6 +10,7 @@ struct Bill{
     int restaurant_y;
     int target_x;       // 目的位置
     int target_y;
+    int status;         // 订单状态 0未分配，1取货，2送货，3送达
 };
 
 
@@ -20,19 +21,18 @@ struct Position{
     int bill_id; // 当前去往位置的订单id
 };
 
-typedef priority_queue<Position*> RiderBag;
+typedef priority_queue<Position> RiderBag;
 
 struct Rider{
     int id;             // 骑手id
     int position_x;     // 骑手当前位置
     int position_y;     
-    Bill* current_bill; // 骑手当前订单
+    Position cur_position; // 骑手当前订单
     RiderBag bag;     // 骑手背包数据
     Rider(int id):
         id(id),
         position_x(-1),
-        position_y(-1),
-        current_bill(NULL)
+        position_y(-1)
     {}; // 构造函数,初始化Rider,位置设为(-1,-1);其余设置为NULL;
 };
 
