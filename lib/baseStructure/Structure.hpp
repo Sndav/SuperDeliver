@@ -30,6 +30,7 @@ struct Position{
 };
 
 typedef priority_queue<Position> RiderBag;
+typedef vector<Position> RiderBag2;
 
 struct Rider{
     int id;             // 骑手id

@@ -1,4 +1,4 @@
-#include "lib/baseStructure/Rider.hpp"
+#include "lib/global."
 
 int main(){
     Rider_buy_rider();

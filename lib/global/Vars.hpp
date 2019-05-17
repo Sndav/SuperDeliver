@@ -2,10 +2,11 @@
 #define _Vars
 
 #include "Header.hpp"
-#include "../baseStructure/Structure.hpp"
 
 RiderList GlobalRiderList;
 BillLog GlobalBillLog;
+BillQueue GlobalBillQueue;
+
 int GlobalMoney; // 当前多少钱
 int GlobalTime;  // 当前时间
 
