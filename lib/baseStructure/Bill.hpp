@@ -1,5 +1,7 @@
 // 头文件声明
+#include "Structure.hpp"
 #include "../global/Header.hpp"
+#include "../global/Vars.hpp"
 
 /*
     Summary:
@@ -13,7 +15,7 @@ void Bill_check_bill(int id){
     Bill* R = GlobalBillLog[id];
 // TODO:获取现在的时间nowtime，并都转化为时间单位
     int nowtime,thetime;
-    thetime = nowtiem - R->start_time;
+    thetime = nowtime - R->start_time;
     if(thetime>30&&thetime<=60)//判断是否超时
     GlobalMoney-=50;
 }
@@ -39,12 +41,11 @@ void Bill_read_bill(){
     Return:
         None
 */
-Bill* bill_get_next_bill(){
-    //TODO:获取起始订单id
+Bill* Bill_get_next_bill(int id){
+    
     Bill* R = GlobalBillLog[id];
     if(R->status==0)//如果订单状态是0未分配就返回，否则id++判断下一个订单是否被分配
     return R;
-    else id++;
 }
 
 /*
@@ -55,7 +56,7 @@ Bill* bill_get_next_bill(){
     Return:
        bill
 */
-Bill* bill_get_bill(int id){
+Bill* Bill_get_bill(int id){
     Bill* R = GlobalBillLog[id];//将id为id的订单返回
     return R;
 }
@@ -69,7 +70,7 @@ Bill* bill_get_bill(int id){
     Return:
     
 */
-void bill_change_status(int id,int statu){
+void Bill_change_status(int id,int statu){
     Bill* R = GlobalBillLog[id];
     R->status = statu;//将status改变
 }
@@ -82,7 +83,7 @@ void bill_change_status(int id,int statu){
     Return:
       status
 */
-int bill_get_status(int id){
+int Bill_get_status(int id){
     Bill* R = GlobalBillLog[id];
     return R->status;
 }
@@ -95,8 +96,8 @@ int bill_get_status(int id){
     Return:
       void
 */
-void assign(int bill_id,int rider_id){
-    Bill* R = GlobalBillQueue[bill_id];//获取订单
+void Bill_assign(int bill_id,int rider_id){
+    Bill* R = GlobalBillLog[bill_id];//获取订单
     Rider* P = GlobalRiderList[rider_id];//获取rider
 
     P->bag.push(bill_id);
@@ -105,5 +106,6 @@ void assign(int bill_id,int rider_id){
     P->cur_position.type = 0;
     P->cur_position.bill_id = bill_id;   
 }
+
 
 

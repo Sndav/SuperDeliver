@@ -13,6 +13,10 @@ struct Bill{
     int target_x;       // 目的位置
     int target_y;
     int status;         // 订单状态 0未分配，1取货，2送货，3送达
+    Bill(int id):
+        id(id);
+        status(0);
+    {};
 };
 
 
@@ -30,7 +34,6 @@ struct Position{
 };
 
 typedef priority_queue<Position> RiderBag;
-typedef vector<Position> RiderBag2;
 
 struct Rider{
     int id;             // 骑手id
@@ -42,7 +45,7 @@ struct Rider{
         id(id),
         position_x(-1),
         position_y(-1)
-    {}; // 构造函数,初始化Rider,位置设为(-1,-1);其余设置为NULL;
+    {}; // 构造函数,初始化Rider,位置设为(-1,-1);
 };
 
 typedef vector<Bill*> BillLog; // 存放所有订单
