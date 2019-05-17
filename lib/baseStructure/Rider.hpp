@@ -69,7 +69,7 @@ void Rider_pick_up_bill(int id){
 void Rider_deliver_ok(int id){
     Rider* R = GlobalRiderList[id];             // 取得Rider
     Position R_position = R->cur_position;      // 取得当前目的位置信息
-    int curbill_id = R_position.bill_id;        // 获取当前Billid
+    int curbill_id = R_position.bill_id;        // 获取当前Bill_id
     Bill * curBill = GlobalBillLog[curbill_id]; // 获取当前Bill
 
     GlobalMoney += 10; // TODO: get_bill_oney(curbill_id) // 加钱

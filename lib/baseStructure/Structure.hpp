@@ -49,7 +49,7 @@ struct Rider{
 };
 
 typedef vector<Bill*> BillLog; // 存放所有订单
-typedef queue<Bill*> BillQueue; //存放为分配订单队列
+typedef queue<Bill*> BillQueue; //存放未分配订单队列
 typedef vector<Rider*> RiderList; // 骑手列表
 
 #endif

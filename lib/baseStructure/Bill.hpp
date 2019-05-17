@@ -35,16 +35,15 @@ void Bill_read_bill(){
 }
 /*
     Summary:
-        获取队列里第一个未分配订单
+        获取未分配队列里第一个未分配订单
     Parameters:
-        id:bill_id
+        
     Return:
         None
 */
-Bill* Bill_get_next_bill(int id){
+Bill* Bill_get_next_bill(){
     
-    Bill* R = GlobalBillLog[id];
-    if(R->status==0)//如果订单状态是0未分配就返回，否则id++判断下一个订单是否被分配
+    Bill* R = GlobalBillQueue.front();//获得未分配queue的第一个元素
     return R;
 }
 
@@ -100,11 +99,13 @@ void Bill_assign(int bill_id,int rider_id){
     Bill* R = GlobalBillLog[bill_id];//获取订单
     Rider* P = GlobalRiderList[rider_id];//获取rider
 
-    P->bag.push(bill_id);
-    P->cur_position.position_x = R->restaurant_x;
-    P->cur_position.position_y = R->restaurant_y;
-    P->cur_position.type = 0;
-    P->cur_position.bill_id = bill_id;   
+    
+    Position Q;
+    Q.bill_id = bill_id;
+    Q.position_x = R->restaurant_x;
+    Q.position_y = R->restaurant_y;
+    Q.type = 0;
+    P->bag.push(Q);    
 }
 
 
