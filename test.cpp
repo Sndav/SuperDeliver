@@ -16,6 +16,7 @@ void Pr(RiderBag B){
 void PrR(Rider *R){
     printf("骑手%d的位置：(%d,%d)\n",R->id,R->position_x,R->position_y);
 }
+
 int main(){
     Rider* R = new Rider(1);
     R->position_x = 0;
@@ -28,6 +29,8 @@ int main(){
     B.push_back(newP(0,4,5));
     B.push_back(newP(0,5,6));
     R->bag = B;
+    GlobalRiderList.push_back(R);
+    Rider_deliver_ok(0);
     int rx=0,ry=0;
     Alg_Path_getNextMove(R->position_x,R->position_y,R->cur_position,rx,ry);
     printf("%d %d\n",rx,ry);

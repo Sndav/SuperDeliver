@@ -22,6 +22,9 @@ void Bill_check_bill(int id){
     if(thetime> 30 && thetime<=60){ // 超时
         GlobalBillovertime++;
         GlobalMoney-=50;
+    }else if(thetime > 60){
+        printf("DIEEEEEEE");
+        exit(0);
     }
 }
 

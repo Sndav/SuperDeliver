@@ -27,6 +27,7 @@ int Rider_buy_rider(){
 */
 void Rider_move_rider(int id,int x,int y){
     Rider* R = GlobalRiderList[id];
+    if(R->cur_position.type == -1) return;
     // TODO: 边界操作判断
     R->position_x += x;
     R->position_y += y;
@@ -54,7 +55,7 @@ void Rider_pick_up_bill(int id){
     next_p.position_x = curBill->target_x;
     next_p.position_y = curBill->target_y;
     R->bag.push_back(next_p); // 将订单目的地地址入队列
-    
+
     R->cur_position = *R->bag.begin();
     R->bag.erase(R->bag.begin()); // 更新当前目的地址
 }
@@ -70,11 +71,11 @@ void Rider_pick_up_bill(int id){
 
 void Rider_deliver_ok(int id){
     GlobalBillAccomplish++;
-    Rider* R = GlobalRiderList[id];             // 取得Rider
+    Rider* &R = GlobalRiderList[id];             // 取得Rider
     Position R_position = R->cur_position;      // 取得当前目的位置信息
     int curbill_id = R_position.bill_id;        // 获取当前Bill_id
     Bill * curBill = GlobalBillLog[curbill_id]; // 获取当前Bill
-
+    Bill_check_bill(curbill_id);
     GlobalMoney += 10; // 加钱
     curBill->status = 3; // TODO:chang_status(id,status)
 
@@ -83,13 +84,14 @@ void Rider_deliver_ok(int id){
         R->bag.erase(R->bag.begin()); // 更新当前目的地址
         adjustRider(R);
     }else{
-        R->cur_position.position_x = -100;
-        R->cur_position.position_y = -100;
+        R->cur_position.position_x = 0;
+        R->cur_position.position_y = 0;
         R->cur_position.type = -1;
     }
 }
 
 void Rider_MoveRider(Rider * rider){
+    if(rider->cur_position.type == -1) return;
     int rx=0,ry=0;
     Alg_Path_getNextMove(rider->position_x,rider->position_y,rider->cur_position,rx,ry);
     Rider_move_rider(rider->id,rx,ry);
@@ -100,7 +102,7 @@ Rider * Rider_get_rider(int id){
 }
 
 bool isNearPosition(int x,int y,int x2,int y2){ // 是否在旁边？
-    if(abs(x-x2) <= 1 && abs(y-y2) <= 1)return true;
+    if((abs(x-x2) <= 1 && y==y2) || (x==x2 && abs(y-y2) <= 1))return true;
     return false;
 } 
 
@@ -111,11 +113,21 @@ void Rider_CheckPosition(Rider *rider){
                         rider->position_y)){
         auto curP = rider->cur_position;
         if(curP.type == 1){ // 目的地
-            Rider_deliver_ok(curP.bill_id);
+            printf("========Arrive========\n");
+            Rider_deliver_ok(rider->id);
         }else if(curP.type == -1){
             return;
         }else if(curP.type == 0){ // 餐馆
+            printf("========PickUP========\n");
             Rider_pick_up_bill(rider->id);
         }
     } // 到达当前目的地
+}
+
+bool check_finish(){
+    for(auto rider = GlobalRiderList.begin(); rider != GlobalRiderList.end();++rider){
+        if((*rider)->cur_position.type != -1)
+        return false;
+    }
+    return true;
 }

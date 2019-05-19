@@ -1,9 +1,15 @@
 #include "lib/global/Header.hpp"
 int main(){
-    int T =100;
-    freopen("data1/sales.txt","r",stdin); // 输入
+
+    freopen("data2/sales.txt","r",stdin); // 输入
     while(ReadLine()){};
-    while(T--){
+    int i = 1;
+    while(GlobalBillAccomplish != GlobalBillSum || i == 1){
+        if(GlobalMoney < 0){
+            printf("DIEEEEEE");
+            exit(0);
+        }
+        i=0;
         GlobalTime++;
         printf("============TIME:%d================\n",GlobalTime);
         while(GlobalMoney >= 300){
