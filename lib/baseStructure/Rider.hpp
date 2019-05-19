@@ -9,7 +9,7 @@
         int, id of the registed rider;
 */
 int Rider_buy_rider(){
-    int new_id = GlobalRiderList.size()+1; // 获取新id
+    int new_id = GlobalRiderList.size(); // 获取新id
     Rider* R = new Rider(new_id);   // new Rider
     GlobalRiderList.push_back(R);   // 加入队列
     return new_id;   // 返回
@@ -49,12 +49,14 @@ void Rider_pick_up_bill(int id){
     curBill->status = 2; // TODO: 此处应该调用bill的change_status
 
     Position next_p;
+    next_p.type = 1;
     next_p.bill_id = curbill_id;
-    next_p.position_x = curBill->restaurant_x;
-    next_p.position_y = curBill->restaurant_y;
-    R->bag.push(next_p); // 将订单目的地地址入队列
-
-    R->cur_position = R->bag.top();R->bag.pop(); // 更新当前目的地址
+    next_p.position_x = curBill->target_x;
+    next_p.position_y = curBill->target_y;
+    R->bag.push_back(next_p); // 将订单目的地地址入队列
+    
+    R->cur_position = *R->bag.begin();
+    R->bag.erase(R->bag.begin()); // 更新当前目的地址
 }
 
 /*
@@ -67,18 +69,53 @@ void Rider_pick_up_bill(int id){
 */
 
 void Rider_deliver_ok(int id){
+    GlobalBillAccomplish++;
     Rider* R = GlobalRiderList[id];             // 取得Rider
     Position R_position = R->cur_position;      // 取得当前目的位置信息
     int curbill_id = R_position.bill_id;        // 获取当前Bill_id
     Bill * curBill = GlobalBillLog[curbill_id]; // 获取当前Bill
 
-    GlobalMoney += 10; // TODO: get_bill_oney(curbill_id) // 加钱
+    GlobalMoney += 10; // 加钱
     curBill->status = 3; // TODO:chang_status(id,status)
 
-    R->cur_position = R->bag.top();R->bag.pop(); // 更新当前目的地址
+    if(!R->bag.empty()){ // 空
+        R->cur_position = *R->bag.begin();
+        R->bag.erase(R->bag.begin()); // 更新当前目的地址
+        adjustRider(R);
+    }else{
+        R->cur_position.position_x = -100;
+        R->cur_position.position_y = -100;
+        R->cur_position.type = -1;
+    }
+}
 
+void Rider_MoveRider(Rider * rider){
+    int rx=0,ry=0;
+    Alg_Path_getNextMove(rider->position_x,rider->position_y,rider->cur_position,rx,ry);
+    Rider_move_rider(rider->id,rx,ry);
 }
 
 Rider * Rider_get_rider(int id){
     return GlobalRiderList[id];
+}
+
+bool isNearPosition(int x,int y,int x2,int y2){ // 是否在旁边？
+    if(abs(x-x2) <= 1 && abs(y-y2) <= 1)return true;
+    return false;
+} 
+
+void Rider_CheckPosition(Rider *rider){
+    if( isNearPosition( rider->cur_position.position_x,
+                        rider->cur_position.position_y,
+                        rider->position_x,
+                        rider->position_y)){
+        auto curP = rider->cur_position;
+        if(curP.type == 1){ // 目的地
+            Rider_deliver_ok(curP.bill_id);
+        }else if(curP.type == -1){
+            return;
+        }else if(curP.type == 0){ // 餐馆
+            Rider_pick_up_bill(rider->id);
+        }
+    } // 到达当前目的地
 }

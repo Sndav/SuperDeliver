@@ -12,9 +12,10 @@ public:
 执行 .work
 使用 int getRes(vector<Position> &res)获取
 */
+
 class TSP_Group{
 public:
-    RiderBag2 Plist;
+    RiderBag Plist;
     int city_num;//城市数量
     const int unit_num = 100;//群体规模
     int ps = 10;//变异概率
@@ -23,8 +24,9 @@ public:
     TSP_Unit best;
     int best_gen;
 
-    TSP_Group(RiderBag2 List){
+    TSP_Group(RiderBag List){
         Plist = List;
+        city_num = Plist.size();
         best.length = 0x3f3f3f3f;
         best_gen = 0;
         for(int i = 0; i < unit_num; i++){
@@ -51,7 +53,6 @@ public:
             int rel = 0;
             for(int i = 1; i < city_num; i++)
                 rel += getDis(group[k].path[i-1],group[k].path[i]);
-            rel += getDis(group[k].path[city_num-1],group[k].path[0]);
             group[k].length = rel;
         }
     }
@@ -114,10 +115,12 @@ public:
     }
 
     //输出信息
-    int getRes(RiderBag2 &res){
+    int getRes(RiderBag &res){
+        RiderBag ret;
         for(int j = 0; j < city_num; j++){
-            res.push_back(Plist[group[0].path[j]]);
+            ret.push_back(Plist[group[0].path[j]]);
         }
+        res = ret;
         return group[0].length;
     }
 
@@ -142,11 +145,36 @@ public:
 
 };
 
+int getPath(vector<Position> input,vector<Position> &res){
+    auto TSP = TSP_Group(input);
+    TSP.work();
+    return TSP.getRes(res);
+}
 
+void adjustPath(vector<Position> &input, int start_id){
+    vector<Position> tmp;
+    int i;
+    for(i = 0;i<input.size();i++){
+        if(input[i].bill_id == start_id) break;
+    }
+    for(int j = 0;j<input.size();j++){
+        tmp.push_back( input[(j+i) % (input.size())] );
+    }
+    input = tmp;
+}
+
+void adjustRider(Rider* &R){
+    RiderBag tmp = R->bag;
+    tmp.push_back(R->cur_position);
+    getPath(tmp,tmp);
+    adjustPath(tmp,R->cur_position.bill_id);
+    tmp.erase(tmp.begin());
+    R->bag = tmp;
+}
 /*
     获取下一步走法
 */
-void Alg_Path_getNextMove(int x,int y,Position* Target,int &r_x,int &r_y){
+void Alg_Path_getNextMove(int x,int y,Position Target,int &r_x,int &r_y){
     // 反正怎么走长度都是一样的不如先横着在竖着。
     // OK TODO:这里需要考虑几个问题 对于一个目的地可以到达其周围4个点 如何知道怎么到达其中的一个点呢？
     // 感觉其实好像不用纠结这个问题，毕竟也多不了几步。
@@ -154,10 +182,10 @@ void Alg_Path_getNextMove(int x,int y,Position* Target,int &r_x,int &r_y){
         如果本来在左方 -> 到左边那个地方
         在右方 -> 右方
     */
-    int t_x = Target->position_x; 
-    int t_y = Target->position_y;
+    int t_x = Target.position_x; 
+    int t_y = Target.position_y;
 
-    if(x < t_x-1 && x == t_x){r_x = 1;r_y =0;return;} 
+    if(x < t_x-1 || x == t_x){r_x = 1;r_y =0;return;} 
     if(x > t_x+1){r_x = -1;r_y =0;return;}
     if(x == t_x+1 || x == t_x-1){
         if(y == t_y){r_x = r_y = 0;return;}

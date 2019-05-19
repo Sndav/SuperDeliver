@@ -14,8 +14,8 @@ struct Bill{
     int target_y;
     int status;         // 订单状态 0未分配，1取货，2送货，3送达
     Bill(int id):
-        id(id);
-        status(0);
+        id(id),
+        status(0)
     {};
 };
 
@@ -23,17 +23,11 @@ struct Bill{
 struct Position{
     int position_x;
     int position_y;
-    int type; // 位置类型 0->餐馆 1->目的地
+    int type; // 位置类型 0->餐馆 1->目的地 -1->未初始化
     int bill_id; // 当前去往位置的订单id
-    bool operator <(Position a) const{
-        return true; // TODO:TSP比大小
-    }
-    bool operator >(Position a) const{
-        return false; // TODO:TSP比大小
-    }
 };
 
-typedef priority_queue<Position> RiderBag;
+typedef vector<Position> RiderBag;
 
 struct Rider{
     int id;             // 骑手id
@@ -43,9 +37,11 @@ struct Rider{
     RiderBag bag;     // 骑手背包数据
     Rider(int id):
         id(id),
-        position_x(-1),
-        position_y(-1)
-    {}; // 构造函数,初始化Rider,位置设为(-1,-1);
+        position_x(0),
+        position_y(0)
+        {
+            cur_position.type = -1;
+        }; // 构造函数,初始化Rider,位置设为(-1,-1);
 };
 
 typedef vector<Bill*> BillLog; // 存放所有订单

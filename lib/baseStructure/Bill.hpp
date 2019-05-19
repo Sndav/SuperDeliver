@@ -11,13 +11,18 @@
     Return:
         None
 */
+int Bill_get_bill_money(int id){
+    
+}
+
 void Bill_check_bill(int id){
-    Bill* R = GlobalBillLog[id];
-// TODO:获取现在的时间nowtime，并都转化为时间单位
+    Bill* R = GlobalBillLog[id]; // TODO:获取现在的时间nowtime，并都转化为时间单位
     int nowtime,thetime;
-    thetime = nowtime - R->start_time;
-    if(thetime>30&&thetime<=60)//判断是否超时
-    GlobalMoney-=50;
+    thetime = GlobalTime - R->start_time;
+    if(thetime> 30 && thetime<=60){ // 超时
+        GlobalBillovertime++;
+        GlobalMoney-=50;
+    }
 }
 
 /*
@@ -96,16 +101,27 @@ int Bill_get_status(int id){
       void
 */
 void Bill_assign(int bill_id,int rider_id){
-    Bill* R = GlobalBillLog[bill_id];//获取订单
-    Rider* P = GlobalRiderList[rider_id];//获取rider
+    GlobalBillSum++; //增加订单
+    Bill* B = GlobalBillLog[bill_id];//获取订单
+    Rider* R = GlobalRiderList[rider_id];//获取rider
 
-    
-    Position Q;
-    Q.bill_id = bill_id;
-    Q.position_x = R->restaurant_x;
-    Q.position_y = R->restaurant_y;
-    Q.type = 0;
-    P->bag.push(Q);    
+    if(R->cur_position.type == -1){
+        Position &P = R->cur_position;
+        P.bill_id = bill_id;
+        P.position_x = B->restaurant_x;
+        P.position_y = B->restaurant_y;
+        P.type = 0;
+    }else{
+        Position P = R->cur_position;
+        P.bill_id = bill_id;
+        P.position_x = B->restaurant_x;
+        P.position_y = B->restaurant_y;
+        P.type = 0;
+        R->bag.push_back(P);
+    }
+    // getMinPath
+
+    adjustRider(R);
 }
 
 
