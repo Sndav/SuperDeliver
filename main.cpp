@@ -1,7 +1,7 @@
 #include "lib/global/Header.hpp"
 int main(){
-
-    freopen("data2/sales.txt","r",stdin); // 输入
+    GlobalBillLog.push_back(new Bill(-1));
+    freopen("data1/sales.txt","r",stdin); // 输入
     while(ReadLine()){};
     int i = 1;
     while(GlobalBillAccomplish != GlobalBillSum || i == 1){

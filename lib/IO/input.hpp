@@ -9,6 +9,7 @@ bool ReadLine(){
     );
     if(in == EOF) return false;
     newBill->status = 0;
+    GlobalBillSum++;
     GlobalBillQueue.push(newBill);
     GlobalBillLog.push_back(newBill);
     return true;

@@ -104,7 +104,6 @@ int Bill_get_status(int id){
       void
 */
 void Bill_assign(int bill_id,int rider_id){
-    GlobalBillSum++; //增加订单
     Bill* B = GlobalBillLog[bill_id];//获取订单
     Rider* R = GlobalRiderList[rider_id];//获取rider
 

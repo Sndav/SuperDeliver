@@ -37,7 +37,7 @@ struct Rider{
     RiderBag bag;     // 骑手背包数据
     Rider(int id):
         id(id),
-        position_x(0),
+        position_x(1),
         position_y(0)
         {
             cur_position.type = -1;
