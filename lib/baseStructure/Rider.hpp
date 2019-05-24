@@ -114,13 +114,16 @@ void Rider_CheckPosition(Rider *rider){
                         rider->position_y)){
         auto curP = rider->cur_position;
         if(curP.type == 1){ // 目的地
-            printf("========Arrive========\n");
-            
+            // printf("========Arrive========\n");
+            rider->arrive_po_x = rider->cur_position.position_x;
+            rider->arrive_po_y = rider->cur_position.position_y;
             Rider_deliver_ok(rider->id);
         }else if(curP.type == -1){
             return;
         }else if(curP.type == 0){ // 餐馆
-            printf("========PickUP========\n");
+            rider->arrive_po_x = rider->cur_position.position_x;
+            rider->arrive_po_y = rider->cur_position.position_y;
+            // printf("========PickUP========\n");
             Rider_pick_up_bill(rider->id);
         }
     } // 到达当前目的地

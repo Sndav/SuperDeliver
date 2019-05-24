@@ -37,13 +37,17 @@ struct Rider{
     int position_y;     
     Position cur_position; // 骑手当前订单
     RiderBag bag;     // 骑手背包数据
+    int arrive_po_x;
+    int arrive_po_y;
     Rider(int id):
+        arrive_po_x(-1),
+        arrive_po_y(-1),
         id(id),
         position_x(1),
-        position_y(0)
-        {
+        position_y(0){
             cur_position.type = -1;
         }; // 构造函数,初始化Rider,位置设为(-1,-1);
+    
 };
 
 typedef vector<Bill*> BillLog; // 存放所有订单

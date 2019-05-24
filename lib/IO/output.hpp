@@ -6,10 +6,15 @@ void PrintStatus(){
 	printf("接单数：%d\n",GlobalBillSum);
 	printf("完成数：%d; ",GlobalBillAccomplish);
 	Bill_print_finished();
-	printf("超时数：%d\n",GlobalBillovertime);
+	printf("超时数：%d ",GlobalBillovertime);
 	Bill_print_violation_ticket();
 	for(auto iter = GlobalRiderList.begin();iter!=GlobalRiderList.end();++iter){ 
 		printf("骑手%d的位置：(%d,%d);停靠:",(*iter)->id,(*iter)->position_x,(*iter)->position_y);
+		if((*iter)->arrive_po_x != -1 && (*iter)->arrive_po_y != -1){
+			printf("(%d,%d)",(*iter)->arrive_po_x,(*iter)->arrive_po_y);
+			(*iter)->arrive_po_x = (*iter)->arrive_po_y = -1;
+		}
+		printf("\n");
 	}
 
 }

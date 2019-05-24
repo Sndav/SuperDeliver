@@ -41,6 +41,7 @@ int Bill_return_id(int id){
 
 //打印罚单
 void Bill_print_violation_ticket(){
+    printf("罚单:");
     for(int i = 0; i < GlobalBillLog.size(); i++){
        if (Bill_return_id(i)!=NULL)
        printf("%d ",i);
@@ -50,9 +51,10 @@ void Bill_print_violation_ticket(){
 
 //打印结单
 void Bill_print_finished(){
-  for(int i = 0; i < GlobalBillLog.size(); i++){
-      Bill* R = GlobalBillLog[i];
-      if((R->end_time == GlobalTime)&&(R->status == 3))
+    printf("结单:");
+    for(int i = 0; i < GlobalBillLog.size(); i++){
+        Bill* R = GlobalBillLog[i];
+        if((R->end_time == GlobalTime)&&(R->status == 3))
         printf("%d ",i);
     }  
     printf("\n");
