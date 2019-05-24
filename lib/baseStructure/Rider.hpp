@@ -78,6 +78,7 @@ void Rider_deliver_ok(int id){
     Bill_check_bill(curbill_id);
     GlobalMoney += 10; // 加钱
     curBill->status = 3; // TODO:chang_status(id,status)
+    curBill->end_time = GlobalTime;//方便我判断
 
     if(!R->bag.empty()){ // 空
         R->cur_position = *R->bag.begin();
@@ -114,6 +115,7 @@ void Rider_CheckPosition(Rider *rider){
         auto curP = rider->cur_position;
         if(curP.type == 1){ // 目的地
             printf("========Arrive========\n");
+            
             Rider_deliver_ok(rider->id);
         }else if(curP.type == -1){
             return;
@@ -131,3 +133,4 @@ bool check_finish(){
     }
     return true;
 }
+

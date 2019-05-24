@@ -28,6 +28,37 @@ void Bill_check_bill(int id){
     }
 }
 
+//返回罚时的订单号
+int Bill_return_id(int id){
+    Bill* R = GlobalBillLog[id]; // TODO:获取现在的时间nowtime，并都转化为时间单位
+    int nowtime,thetime;
+    thetime = GlobalTime - R->start_time;
+    if(thetime == 31) // 超时
+     return id;
+    else 
+     return NULL; 
+}
+
+//打印罚单
+void Bill_print_violation_ticket(){
+    for(int i = 0; i < GlobalBillLog.size(); i++){
+       if (Bill_return_id(i)!=NULL)
+       printf("%d ",i);
+    }
+    printf("\n");
+}
+
+//打印结单
+void Bill_print_finished(){
+  for(int i = 0; i < GlobalBillLog.size(); i++){
+      Bill* R = GlobalBillLog[i];
+      if((R->end_time == GlobalTime)&&(R->status == 3))
+        printf("%d ",i);
+    }  
+    printf("\n");
+}
+
+
 /*
     Summary:
         让订单加入队列

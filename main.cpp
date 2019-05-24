@@ -26,11 +26,11 @@ int main(){
             if(GlobalBillQueue.empty())break;
             CurBill = GlobalBillQueue.front();
         }
+        PrintStatus();
         for(auto rider = GlobalRiderList.begin(); rider != GlobalRiderList.end();++rider){
             Rider_CheckPosition(*rider);
             Rider_MoveRider(*rider);
         }
-        PrintStatus();
     }
     return 0;
 }

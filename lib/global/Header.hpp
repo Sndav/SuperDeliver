@@ -5,7 +5,6 @@
 #include<cstdio>
 #include<iostream>
 #include<cmath>
-#include<cstring>
 using namespace std;
 #include "../baseStructure/Structure.hpp"
 #include "./Consts.hpp"

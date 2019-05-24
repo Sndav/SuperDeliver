@@ -8,6 +8,7 @@ struct MapNode{
 struct Bill{
     int id;             // 订单id
     int start_time;     // 订单开始时间
+    int end_time;
     int restaurant_x;   // 餐馆位置
     int restaurant_y;
     int target_x;       // 目的位置
@@ -15,6 +16,7 @@ struct Bill{
     int status;         // 订单状态 0未分配，1取货，2送货，3送达
     Bill(int id):
         id(id),
+        end_time(0),
         status(0)
     {};
 };
