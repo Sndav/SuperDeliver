@@ -1,10 +1,11 @@
 #include "lib/global/Header.hpp"
 int main(){
     GlobalBillLog.push_back(new Bill(-1));
-    freopen("data1/sales.txt","r",stdin); // 输入
+    freopen("data/5.in","r",stdin); // 输入
     while(ReadLine()){};
     int i = 1;
     while(GlobalBillAccomplish != GlobalBillSum || i == 1){
+        // sleep(2);
         if(GlobalMoney < 0){
             printf("DIEEEEEE");
             exit(0);
@@ -12,7 +13,7 @@ int main(){
         i=0;
         GlobalTime++;
         printf("============TIME:%d================\n",GlobalTime);
-        while(GlobalMoney >= 300){
+        while(GlobalMoney >= 400){
             Rider_buy_rider();
             GlobalMoney -= 300;
         }
@@ -27,8 +28,8 @@ int main(){
             CurBill = GlobalBillQueue.front();
         }
         for(auto rider = GlobalRiderList.begin(); rider != GlobalRiderList.end();++rider){
-            Rider_CheckPosition(*rider);
             Rider_MoveRider(*rider);
+            Rider_CheckPosition(*rider);
         }
         PrintStatus();
     }

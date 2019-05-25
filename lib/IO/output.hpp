@@ -11,6 +11,8 @@ void PrintStatus(){
 	for(auto iter = GlobalRiderList.begin();iter!=GlobalRiderList.end();++iter){ 
 		printf("骑手%d的位置：(%d,%d);停靠:",(*iter)->id,(*iter)->position_x,(*iter)->position_y);
 		if((*iter)->arrive_po_x != -1 && (*iter)->arrive_po_y != -1){
+			if((*iter)->arrive_type == 0)printf("食客");
+			if((*iter)->arrive_type == 1)printf("餐馆");
 			printf("(%d,%d)",(*iter)->arrive_po_x,(*iter)->arrive_po_y);
 			(*iter)->arrive_po_x = (*iter)->arrive_po_y = -1;
 		}

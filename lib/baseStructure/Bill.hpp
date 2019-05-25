@@ -15,17 +15,19 @@ int Bill_get_bill_money(int id){
     
 }
 
-void Bill_check_bill(int id){
+int Bill_check_bill(int id){
     Bill* R = GlobalBillLog[id]; // TODO:获取现在的时间nowtime，并都转化为时间单位
     int nowtime,thetime;
     thetime = GlobalTime - R->start_time;
-    if(thetime> 30 && thetime<=60){ // 超时
+    if(thetime > 30 && thetime<= 60){ // 超时
         GlobalBillovertime++;
         GlobalMoney-=50;
+        return id;
     }else if(thetime > 60){
         printf("DIEEEEEEE");
         exit(0);
     }
+    return -1;
 }
 
 //返回罚时的订单号
@@ -33,10 +35,11 @@ int Bill_return_id(int id){
     Bill* R = GlobalBillLog[id]; // TODO:获取现在的时间nowtime，并都转化为时间单位
     int nowtime,thetime;
     thetime = GlobalTime - R->start_time;
-    if(thetime == 31) // 超时
-     return id;
+    if(thetime == 31){ // 超时
+        return id;
+    }
     else 
-     return NULL; 
+        return NULL; 
 }
 
 //打印罚单

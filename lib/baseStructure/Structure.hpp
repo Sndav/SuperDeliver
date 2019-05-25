@@ -39,7 +39,9 @@ struct Rider{
     RiderBag bag;     // 骑手背包数据
     int arrive_po_x;
     int arrive_po_y;
+    int arrive_type;
     Rider(int id):
+        arrive_type(-1),
         arrive_po_x(-1),
         arrive_po_y(-1),
         id(id),

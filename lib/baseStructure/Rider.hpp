@@ -117,10 +117,12 @@ void Rider_CheckPosition(Rider *rider){
             // printf("========Arrive========\n");
             rider->arrive_po_x = rider->cur_position.position_x;
             rider->arrive_po_y = rider->cur_position.position_y;
+            rider->arrive_type = 0;
             Rider_deliver_ok(rider->id);
         }else if(curP.type == -1){
             return;
         }else if(curP.type == 0){ // 餐馆
+            rider->arrive_type = 1;
             rider->arrive_po_x = rider->cur_position.position_x;
             rider->arrive_po_y = rider->cur_position.position_y;
             // printf("========PickUP========\n");

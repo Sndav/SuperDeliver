@@ -14,6 +14,8 @@ int getBestRider(Bill * bill){
     auto min_rider = rider;
 
     for(rider = GlobalRiderList.begin()+1; rider != GlobalRiderList.end();++rider){
+        if((*rider)->cur_position.type == -1)
+            return (*rider)->id;
         auto Bag = (*rider)->bag;
         Bag.push_back(P);
         int tmp_cost = getPath(Bag,Bag);
