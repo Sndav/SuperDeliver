@@ -17,11 +17,11 @@ void PrintStatus(){
     for(int i = 0; i < GlobalBillLog.size(); i++){
         Bill* R = GlobalBillLog[i];
         if((R->end_time == GlobalTime)&&(R->status == 3))
-        {printf("%d;",i);
-        fprintf(fout,"%d;",i);}
+        {printf("%d",i);
+        fprintf(fout,"%d",i);}
     }
-    printf("\n");
-    fprintf(fout,"\n");
+    printf(";\n");
+    fprintf(fout,";\n");
     printf("超时数:%d;",GlobalBillovertime);
     fprintf(fout,"超时数:%d;",GlobalBillovertime);
     //Bill_print_violation_ticket();
@@ -32,8 +32,8 @@ void PrintStatus(){
        {printf("%d",i);
        fprintf(fout,"%d",i);}
     }
-    printf("\n");
-    fprintf(fout,"\n");
+    printf(";\n");
+    fprintf(fout,";\n");
 
 	for(auto iter = GlobalRiderList.begin();iter!=GlobalRiderList.end();++iter){ 
         printf("骑手%d位置:%d,%d;停靠:",(*iter)->id,(*iter)->position_x,(*iter)->position_y);
@@ -48,13 +48,13 @@ void PrintStatus(){
                 printf("餐馆");
                 fprintf(fout,"餐馆");
             }
-            printf(" %d %d;",(*iter)->arrive_po_x,(*iter)->arrive_po_y);
-            fprintf(fout," %d %d;",(*iter)->arrive_po_x,(*iter)->arrive_po_y);
+            printf(" %d %d",(*iter)->arrive_po_x,(*iter)->arrive_po_y);
+            fprintf(fout," %d %d",(*iter)->arrive_po_x,(*iter)->arrive_po_y);
 
 			(*iter)->arrive_po_x = (*iter)->arrive_po_y = -1;
 		}
-		printf("\n");
-        fprintf(fout,"\n");
+		printf(";\n");
+        fprintf(fout,";\n");
 
 	}
     fclose(fout);
