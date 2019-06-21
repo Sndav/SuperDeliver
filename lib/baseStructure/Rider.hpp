@@ -103,7 +103,10 @@ Rider * Rider_get_rider(int id){
 }
 
 bool isNearPosition(int x,int y,int x2,int y2){ // 是否在旁边？
-    if((abs(x-x2) <= 2 && abs(y-y2)<= 1) || (abs(x-y2)<=1 && abs(y-y2) <= 2))return true;
+    if(
+        (abs(x-x2) == 1 && abs(y-y2) == 0) || 
+        (abs(x-x2) == 0 && abs(y-y2) == 1)
+    )return true;
     return false;
 } 
 

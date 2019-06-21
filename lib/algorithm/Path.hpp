@@ -184,9 +184,13 @@ void Alg_Path_getNextMove(int x,int y,Position Target,int &r_x,int &r_y){
     */
     int t_x = Target.position_x; 
     int t_y = Target.position_y;
-
-    if(x < t_x-1){r_x = 2;r_y =0;return;} 
-    if(x > t_x  +1){r_x = -2;r_y =0;return;}
+    if(abs(t_x - x) == 1 && abs(t_y - y) == 1){
+        r_x = t_x - x;
+        r_y = t_y - y;
+        return;
+    }
+    if(x < t_x - 1){r_x = 2;r_y =0;return;} 
+    if(x > t_x + 1){r_x = -2;r_y =0;return;}
     if(x == t_x+1 || x == t_x-1){
         if(y == t_y){r_x = r_y = 0;return;}
         r_x = 0;
