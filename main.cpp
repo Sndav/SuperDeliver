@@ -1,7 +1,13 @@
 #include "lib/global/Header.hpp"
-int main(){
+#include <fstream>
+int  main(){
+    //initgraph(1024,768);
+    //ege::getch();
+    fstream _output;
+    _output.open("output.txt",ios::out|ios::trunc);
+    _output.close();
     GlobalBillLog.push_back(new Bill(-1));
-    freopen("data/5.in","r",stdin); // 输入
+    freopen("sales.txt","r",stdin); // 输入
     while(ReadLine()){};
     int i = 1;
     while(GlobalBillAccomplish != GlobalBillSum || i == 1){
@@ -33,5 +39,7 @@ int main(){
         }
         PrintStatus();
     }
+    //closegraph();
+    
     return 0;
 }

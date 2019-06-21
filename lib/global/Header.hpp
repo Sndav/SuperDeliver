@@ -3,9 +3,12 @@
 #include<vector>
 #include<queue>
 #include<cstdio>
+#include<cstring>
 #include<iostream>
+#include<cstdlib>
 #include<cmath>
 using namespace std;
+//#include "graphics.h"
 #include "../baseStructure/Structure.hpp"
 #include "./Consts.hpp"
 #include "./Vars.hpp"
