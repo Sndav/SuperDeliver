@@ -40,6 +40,7 @@ struct Rider{
     int arrive_po_x;
     int arrive_po_y;
     int arrive_type;
+    //QLabel* rLabel();
     Rider(int id):
         arrive_type(-1),
         arrive_po_x(-1),
@@ -55,5 +56,7 @@ struct Rider{
 typedef vector<Bill*> BillLog; // 存放所有订单
 typedef queue<Bill*> BillQueue; //存放未分配订单队列
 typedef vector<Rider*> RiderList; // 骑手列表
+typedef vector<QLabel*> rLabelList; //骑手图标列表
+typedef vector<QLabel*> hlList; //高亮图标列表
 
 #endif

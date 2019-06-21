@@ -9,9 +9,13 @@
         int, id of the registed rider;
 */
 int Rider_buy_rider(){
+
     int new_id = GlobalRiderList.size(); // 获取新id
     Rider* R = new Rider(new_id);   // new Rider
+
+
     GlobalRiderList.push_back(R);   // 加入队列
+
     return new_id;   // 返回
 }
 
@@ -31,6 +35,7 @@ void Rider_move_rider(int id,int x,int y){
     // TODO: 边界操作判断
     R->position_x += x;
     R->position_y += y;
+    GlobalRLabel[id]->setGeometry(R->position_x*40,R->position_y*40,40,40);
 }
 
 /*
@@ -58,6 +63,8 @@ void Rider_pick_up_bill(int id){
 
     R->cur_position = *R->bag.begin();
     R->bag.erase(R->bag.begin()); // 更新当前目的地址
+
+    GlobalRLabel[id]->setGeometry(R->position_x*40,R->position_y*40,40,40);
 }
 
 /*
@@ -96,6 +103,7 @@ void Rider_MoveRider(Rider * rider){
     int rx=0,ry=0;
     Alg_Path_getNextMove(rider->position_x,rider->position_y,rider->cur_position,rx,ry);
     Rider_move_rider(rider->id,rx,ry);
+    GlobalRLabel[rider->id]->setGeometry(rider->position_x*40,rider->position_y*40,40,40);
 }
 
 Rider * Rider_get_rider(int id){
@@ -108,6 +116,7 @@ bool isNearPosition(int x,int y,int x2,int y2){ // 是否在旁边？
 } 
 
 void Rider_CheckPosition(Rider *rider){
+    GlobalRLabel[rider->id]->setGeometry(rider->position_x*40,rider->position_y*40,40,40);
     if( isNearPosition( rider->cur_position.position_x,
                         rider->cur_position.position_y,
                         rider->position_x,

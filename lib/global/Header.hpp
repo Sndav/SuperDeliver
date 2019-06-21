@@ -3,8 +3,10 @@
 #include<vector>
 #include<queue>
 #include<cstdio>
+#include<cstring>
 #include<iostream>
 #include<cmath>
+#include<fstream>
 using namespace std;
 #include "../baseStructure/Structure.hpp"
 #include "./Consts.hpp"
@@ -18,4 +20,6 @@ using namespace std;
 #include "../baseFunction/Rider.hpp"
 #include "../IO/input.hpp"
 #include "../IO/output.hpp"
+#include "mainwindow.h"
+#include <QApplication>
 #endif
