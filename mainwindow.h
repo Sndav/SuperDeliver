@@ -38,7 +38,10 @@ private slots:
 
     void on_radioButton_3_toggled(bool checked);
 
-    void PrintStatus();
+    //void PrintStatus();
+
+
+    void on_SpeedSlider_sliderReleased();
 
 private:
     Ui::MainWindow *ui;

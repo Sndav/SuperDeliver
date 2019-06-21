@@ -7,7 +7,7 @@ RiderList GlobalRiderList;
 BillLog GlobalBillLog;
 BillQueue GlobalBillQueue;
 rLabelList GlobalRLabel;
-hlList HlList;
+//hlList HlList;
 
 int GlobalMoney = 1000; // 当前多少钱
 int GlobalTime = 0;  // 当前时间
@@ -23,5 +23,5 @@ int mx,my,ex,ey;
 
 int speed=500;
 
-
+queue<QLabel*> HTs;
 #endif

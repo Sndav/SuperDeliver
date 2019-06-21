@@ -182,11 +182,16 @@ void Alg_Path_getNextMove(int x,int y,Position Target,int &r_x,int &r_y){
         如果本来在左方 -> 到左边那个地方
         在右方 -> 右方
     */
-    int t_x = Target.position_x; 
+    int t_x = Target.position_x;
     int t_y = Target.position_y;
-
-    if(x < t_x-1){r_x = 2;r_y =0;return;} 
-    if(x > t_x  +1){r_x = -2;r_y =0;return;}
+    if(abs(t_x - x) == 1 && abs(t_y - y) == 1){
+        r_x = t_x - x;
+        return;
+    }
+    if(x == t_x){r_x = (-2*x+17)/abs(-2*x+17) ;return;}
+    if(y == t_y){r_y = (-2*y+17)/abs(-2*y+17);return;}
+    if(x < t_x - 1){r_x = 2;r_y =0;return;}
+    if(x > t_x + 1){r_x = -2;r_y =0;return;}
     if(x == t_x+1 || x == t_x-1){
         if(y == t_y){r_x = r_y = 0;return;}
         r_x = 0;

@@ -16,11 +16,14 @@ MainWindow::MainWindow(QWidget *parent) :
     // 设置窗体标题
     //setWindowTitle(tr("Delivery"));
     ui->setupUi(this);
+    ui->NewRiderT->setText("");
     ui->timeText->setText("0");
     ui->BillC->setText("0");
     ui->FondB->setText("1000");
     ui->OverTimeB->setText("0");
     ui->CompleteB->setText("0");
+    ui->RiderCount->setText("0");
+    ui->NewRiderT->setStyleSheet("QLabel {background-color: transparent;}");
     fstream _file;
     _file.open("sales.txt", ios::in);
     fstream _output;
@@ -83,7 +86,7 @@ void MainWindow::on_pushButton_clicked()
                 printf("时间：%d\n",GlobalTime);
                 fprintf(fout,"时间：%d\n",GlobalTime);
                 printf("钱：%d\n",GlobalMoney); // + (int)GlobalRiderList.size()*300 - 1000
-                fprintf(fout,"钱：%d\n",GlobalMoney);
+                fprintf(fout,"钱 ：%d\n",GlobalMoney);
                 printf("接单数：%d\n",GlobalBillSum);
                 fprintf(fout,"接单数：%d\n",GlobalBillSum);
                 printf("完成数：%d; ",GlobalBillAccomplish);
@@ -99,6 +102,7 @@ void MainWindow::on_pushButton_clicked()
 
                     if((*iter)->arrive_po_x != -1 && (*iter)->arrive_po_y != -1){
                         QLabel* HL = new QLabel(ui->TableW);
+                        HTs.push(HL);
                         hltimes++;
                         if((*iter)->arrive_type == 0){
                             printf("食客");
@@ -155,19 +159,29 @@ void MainWindow::freshUI()
     ui->FondB->setText(QString::number(GlobalMoney));
     ui->OverTimeB->setText(QString::number(GlobalBillovertime));
     ui->CompleteB->setText(QString::number(GlobalBillAccomplish));
+    ui->RiderCount->setText(QString::number(GlobalRiderList.size()));
     QWidget::update();
     QElapsedTimer t;
     t.start();
     while(t.elapsed()<speed)
         QCoreApplication::processEvents();
+    ui->NewRiderT->setText(" ");
+    ui->NewRiderT->setStyleSheet("QLabel {background-color: transparent;}");
 }
 
 void MainWindow::round()
 {
+    while(!HTs.empty()){
+        auto tmp = HTs.front();
+        delete tmp;
+        HTs.pop();
+    }
     int riderbought = 0;
     while(GlobalMoney >= 400){
         Rider_buy_rider();
         riderbought++;
+        ui->NewRiderT->setText("新骑手出现！");
+        ui->NewRiderT->setStyleSheet("QLabel {background-color: white;}");
         //QPixmap riderp;
         //riderp.load(":/imgsrc/rider.png");
         QLabel* rLabel = new QLabel(ui->TableW);
@@ -254,25 +268,37 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 void MainWindow::on_pushButton_3_clicked()
 {
     mouseControl=0;
-    qApp->exit(0);
+    exit(0);
 }
 
 void MainWindow::on_radioButton_4_toggled(bool checked)
 {
     speed=50;
+    ui->SpeedLabel->setText(QString::number(1000/(double)speed));
 }
 
 void MainWindow::on_radioButton_toggled(bool checked)
 {
     speed=150;
+    ui->SpeedLabel->setText(QString::number(1000/(double)speed));
 }
 
 void MainWindow::on_radioButton_2_toggled(bool checked)
 {
     speed=500;
+    ui->SpeedLabel->setText(QString::number(1000/(double)speed));
 }
 
 void MainWindow::on_radioButton_3_toggled(bool checked)
 {
     speed=2000;
+    ui->SpeedLabel->setText(QString::number(1000/(double)speed));
+}
+
+
+
+void MainWindow::on_SpeedSlider_sliderReleased()
+{
+    speed = ui->SpeedSlider->value()*ui->SpeedSlider->value();
+    ui->SpeedLabel->setText(QString::number(1000/(double)speed));
 }

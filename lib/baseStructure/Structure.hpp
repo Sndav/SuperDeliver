@@ -47,7 +47,7 @@ struct Rider{
         arrive_po_y(-1),
         id(id),
         position_x(1),
-        position_y(0){
+        position_y(1){
             cur_position.type = -1;
         }; // 构造函数,初始化Rider,位置设为(-1,-1);
     
